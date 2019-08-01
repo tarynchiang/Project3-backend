@@ -10,7 +10,7 @@ const logger       = require('morgan');
 const path         = require('path');
 const passport     = require('passport');
 const session      = require('express-session');
-
+const cors         = require('cors');
 
 require('./config/passport-stuff');
 
@@ -65,7 +65,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000', 'https://blah.herokuapp.com']
+}));
 
 
 
@@ -75,6 +78,9 @@ app.use('/', index);
 
 const userRoutes = require('./routes/userRoutes');
 app.use('/', userRoutes);
+
+const itemRoutes = require('./routes/itemRoutes');
+app.use('/', itemRoutes);
 
 
 
